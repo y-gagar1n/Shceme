@@ -7,7 +7,7 @@ using Shceme.Expression;
 
 namespace Shceme.Procedure
 {
-    public class PlusProcedure : ScmProcedure
+    public class PlusProcedure : PrimitiveProcedure
     {
         public PlusProcedure(ScmExpression exp, ScmEnvironment env) : base(exp)
         {

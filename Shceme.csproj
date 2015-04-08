@@ -55,9 +55,10 @@
     <Compile Include="Expression\VoidExpression.cs" />
     <Compile Include="Procedure\CompoundProcedure.cs" />
     <Compile Include="Procedure\PlusProcedure.cs" />
+    <Compile Include="Procedure\PrimitiveProcedure.cs" />
     <Compile Include="Procedure\ProcedureFactory.cs" />
     <Compile Include="ScmProcedure.cs" />
-    <Compile Include="Procedure\PrimitiveProcedure.cs" />
+    <Compile Include="Procedure\LambdaProcedure.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />

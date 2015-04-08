@@ -25,10 +25,10 @@ namespace Shceme.Expression
             var proc = @Operator.Eval(env) as ProcedureExpression;
             object ve;
 
-            if (proc.Proc is PlusProcedure)
+            object[] mappedOperands;
+            if (proc.Proc is PrimitiveProcedure)
             {
-                var mappedOperands = MapValues(Arguments, env);
-                ve = proc.Proc.Apply(mappedOperands);
+                mappedOperands = Arguments.Select(x => x.Eval(env)).OfType<SelfEvaluatingExpression>().Select(x => x.Value).ToArray();
             }
             else
             {
@@ -38,14 +38,11 @@ namespace Shceme.Expression
                 {
                     newEnv.Dict[parameters[i]] = Arguments[i];
                 }
-
-
-                var mappedOperands = MapValues(Arguments, newEnv);
-                ve = proc.Proc.Apply(mappedOperands); 
+                mappedOperands = MapValues(Arguments, newEnv);
             }
 
-            
-            
+            ve = proc.Proc.Apply(mappedOperands); 
+
             return new SelfEvaluatingExpression(ve);
         }
 

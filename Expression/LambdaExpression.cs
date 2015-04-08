@@ -23,7 +23,7 @@ namespace Shceme.Expression
 
         public override ScmExpression Eval(ScmEnvironment env)
         {
-            var proc = new PrimitiveProcedure(_body, _env, _parameters);
+            var proc = new LambdaProcedure(_body, _env, _parameters);
             return new ProcedureExpression(proc);
         }
 
