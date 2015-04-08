@@ -42,9 +42,9 @@ namespace Shceme
             _factory = new ExpressionFactory();
             _env = new ScmEnvironment();
             
-            _env.Add("+", new ProcedureExpression(AggregateProcedure<int>.Create((x, acc) => acc + x)));
-            _env.Add("*", new ProcedureExpression(AggregateProcedure<int>.Create((x, acc) => acc * x, 1)));
-            _env.Add("-", new ProcedureExpression(AggregateProcedure<int>.Create((x, acc) => acc - x)));
+            _env.Add("+", new ProcedureExpression(AggregateProcedure<int>.Create((acc, x) => acc + x)));
+            _env.Add("*", new ProcedureExpression(AggregateProcedure<int>.Create((acc, x) => acc * x, 1)));
+            _env.Add("-", new ProcedureExpression(AggregateProcedure<int>.Create((acc, x) => acc - x).TransformFirst(x => -x)));
         }
         public string Run(string text)
         {
