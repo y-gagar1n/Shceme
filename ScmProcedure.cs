@@ -9,20 +9,12 @@ namespace Shceme
 {
     public abstract class ScmProcedure
     {
-        private ScmExpression _exp;
-        //private ScmEnvironment _env;
         public bool IsPrimitive { get; set; }
         private string[] _parameters;
 
         public virtual string[] Parameters
         {
             get { return _parameters; }
-        }
-
-        public ScmProcedure(ScmExpression exp)
-        {
-            ///_env = env;
-            _exp = exp;
         }
 
         public abstract object Apply(object[] args);

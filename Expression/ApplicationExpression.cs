@@ -24,7 +24,7 @@ namespace Shceme.Expression
         {
             var proc = @Operator.Eval(env) as ProcedureExpression;
             object ve;
-
+            
             object[] mappedOperands;
             if (proc.Proc is PrimitiveProcedure)
             {

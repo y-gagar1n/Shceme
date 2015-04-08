@@ -19,7 +19,6 @@ namespace Shceme.Procedure
         }
 
         public LambdaProcedure(ScmExpression exp, ScmEnvironment env, string[] parameters)
-            : base(exp)
         {
             _parameters = parameters;
             _scmEnvironment = env;

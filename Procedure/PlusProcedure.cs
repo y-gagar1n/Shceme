@@ -9,15 +9,13 @@ namespace Shceme.Procedure
 {
     public class PlusProcedure : PrimitiveProcedure
     {
-        public PlusProcedure(ScmExpression exp, ScmEnvironment env) : base(exp)
+        public PlusProcedure()
         {
         }
 
         public override object Apply(object[] args)
         {
-            var see0 = args[0] as int?;
-            var see1 = args[1] as int?;
-            return see0 + see1;
+            return args.OfType<int>().Aggregate(0, (x, acc) => acc + x);
         }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Expression\SequenceExpression.cs" />
     <Compile Include="Expression\VariableExpression.cs" />
     <Compile Include="Expression\VoidExpression.cs" />
+    <Compile Include="Procedure\AggregateProcedure.cs" />
     <Compile Include="Procedure\CompoundProcedure.cs" />
     <Compile Include="Procedure\PlusProcedure.cs" />
     <Compile Include="Procedure\PrimitiveProcedure.cs" />

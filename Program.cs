@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Authentication.ExtendedProtection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Shceme.Expression;
@@ -19,7 +20,14 @@ namespace Shceme
             {
                 var text = Console.ReadLine();
                 if (text == "quit") return;
-                Console.WriteLine(interpreter.Run(text));
+                try
+                {
+                    Console.WriteLine(interpreter.Run(text));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }
@@ -34,7 +42,9 @@ namespace Shceme
             _factory = new ExpressionFactory();
             _env = new ScmEnvironment();
             
-            _env.Add("+", new ProcedureExpression(new PlusProcedure(null, _env)));
+            _env.Add("+", new ProcedureExpression(AggregateProcedure<int>.Create((x, acc) => acc + x)));
+            _env.Add("*", new ProcedureExpression(AggregateProcedure<int>.Create((x, acc) => acc * x, 1)));
+            _env.Add("-", new ProcedureExpression(AggregateProcedure<int>.Create((x, acc) => acc - x)));
         }
         public string Run(string text)
         {

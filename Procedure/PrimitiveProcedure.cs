@@ -8,10 +8,5 @@ namespace Shceme.Procedure
 {
     public abstract class PrimitiveProcedure : ScmProcedure
     {
-        public PrimitiveProcedure(ScmExpression exp) : base(exp)
-        {
-        }
-
-        
     }
 }
