@@ -23,6 +23,11 @@ namespace Shceme.Expression
             }
             else
             {
+                int i;
+                if (value is string && Int32.TryParse((string)value, out i))
+                {
+                    value = i;
+                }
                 _value = value;
             }
             
