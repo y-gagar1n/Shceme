@@ -22,28 +22,44 @@ namespace Shceme.Expression
 
         public override ScmExpression Eval(ScmEnvironment env)
         {
-            var proc = @Operator.Eval(env) as ProcedureExpression;
-            object ve;
-            
-            object[] mappedOperands;
-            if (proc.Proc is PrimitiveProcedure)
+            var exp = @Operator.Eval(env);
+
+            if (exp is ProcedureExpression)
             {
-                mappedOperands = Arguments.Select(x => x.Eval(env)).OfType<SelfEvaluatingExpression>().Select(x => x.Value).ToArray();
-            }
-            else
-            {
-                var parameters = proc.Proc.Parameters.ToList();
-                var newEnv = env.Extend();
-                for (int i = 0; i < parameters.Count(); i++)
+                var proc = exp as ProcedureExpression;
+                object ve;
+
+                object[] mappedOperands;
+                if (proc.Proc is PrimitiveProcedure)
                 {
-                    newEnv.Dict[parameters[i]] = Arguments[i];
+                    mappedOperands =
+                        Arguments.Select(x => x.Eval(env))
+                            .OfType<SelfEvaluatingExpression>()
+                            .Select(x => x.Value)
+                            .ToArray();
                 }
-                mappedOperands = MapValues(Arguments, newEnv);
+                else
+                {
+                    var parameters = proc.Proc.Parameters.ToList();
+                    var newEnv = env.Extend();
+                    for (int i = 0; i < parameters.Count(); i++)
+                    {
+                        newEnv.Dict[parameters[i]] = Arguments[i];
+                    }
+                    mappedOperands = MapValues(Arguments, newEnv);
+                }
+
+                ve = proc.Proc.Apply(mappedOperands);
+
+                return new SelfEvaluatingExpression(ve);
+            }
+            else if (exp is ApplicationExpression)
+            {
+                var application = exp as ApplicationExpression;
+                return application.Eval(env);
             }
 
-            ve = proc.Proc.Apply(mappedOperands); 
-
-            return new SelfEvaluatingExpression(ve);
+            return new VoidExpression();
         }
 
         private object[] MapValues(ScmExpression[] exps, ScmEnvironment env)

@@ -14,13 +14,13 @@ namespace Shceme
 
         public ScmExpression Create(string text)
         {
-            int i;
-            //if (Int32.TryParse(text, out i))
-            //{
-            //    return new SelfEvaluatingExpression(i);
-            //}
+            bool b;
+            if (bool.TryParse(text, out b))
+            {
+                return new SelfEvaluatingExpression(b);
+            }
+
             double d;
-            
             if (double.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out d))
             {
                 return new SelfEvaluatingExpression(d);

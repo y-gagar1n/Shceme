@@ -22,7 +22,7 @@ namespace Shceme.Expression
         {
             if (_arguments[0].Type == TokenType.Symbol)
             {
-                DefineVariable(_arguments[0].Value, new SelfEvaluatingExpression(_arguments[1].Value), env);
+                DefineVariable(_arguments[0].Value, _factory.Create(_arguments[1].Value), env);
             }
             else if(_arguments[0].Type == TokenType.Tuple)
             {

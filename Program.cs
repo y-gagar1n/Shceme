@@ -45,7 +45,10 @@ namespace Shceme
             
             _env.Add("+", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc + x)));
             _env.Add("*", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc * x, 1.0)));
-            _env.Add("-", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc - x).TransformFirst(x => -x)));
+            _env.Add("-", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc - x).TransformFirst((x, n) => n > 1 ? -x : x)));
+            _env.Add(">", new ProcedureExpression(new BooleanProcedure<double>((x1, x2) => x1 > x2)));
+            _env.Add("<", new ProcedureExpression(new BooleanProcedure<double>((x1, x2) => x1 < x2)));
+            _env.Add("=", new ProcedureExpression(new BooleanProcedure<double>((x1, x2) => x1 == x2)));
         }
         public string Run(string text)
         {

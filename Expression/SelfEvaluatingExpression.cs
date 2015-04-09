@@ -27,13 +27,13 @@ namespace Shceme.Expression
                 
                 if (value is string)
                 {
-                    int i;
+                    Boolean b;
                     double d;
-                    //if (Int32.TryParse((string) value, out i))
-                    //{
-                    //    value = i;
-                    //}
-                    //else 
+                    if (bool.TryParse((string) value, out b))
+                    {
+                        value = b;
+                    }
+                    else 
                     if (double.TryParse((string)value, NumberStyles.Any, CultureInfo.InvariantCulture, out d))
                     {
                         value = d;
@@ -55,7 +55,11 @@ namespace Shceme.Expression
             {
                 return ((double) _value).ToString().Replace(',', '.');
             }
-            else
+            else if (_value is bool)
+            {
+                return (bool)_value ? "true" : "false";
+            }
+            else 
             {
                 return _value.ToString();
             }

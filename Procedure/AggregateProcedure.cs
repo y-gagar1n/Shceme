@@ -5,7 +5,7 @@ namespace Shceme.Procedure
 {
     public class AggregateProcedure<T> : PrimitiveProcedure
     {
-        private Func<T, T> _transformFirst;
+        private Func<T, int, T> _transformFirst;
         private readonly Func<T, T, T> _aggrFunc;
         private readonly T _seed;
 
@@ -17,6 +17,12 @@ namespace Shceme.Procedure
 
         public AggregateProcedure<T> TransformFirst(Func<T, T> func)
         {
+            _transformFirst = (f, n) => func(f);
+            return this;
+        }
+
+        public AggregateProcedure<T> TransformFirst(Func<T, int, T> func)
+        {
             _transformFirst = func;
             return this;
         }
@@ -24,7 +30,10 @@ namespace Shceme.Procedure
         public override object Apply(object[] args)
         {
             return
-                args.Select((x, i) => i == 0 && _transformFirst != null ? _transformFirst((T) x) : x)
+                args.Select((x, i) =>
+                {
+                    return i == 0 && _transformFirst != null ? _transformFirst((T) x, args.Count()) : x;
+                })
                     .OfType<T>()
                     .Aggregate<T, T>(_seed, _aggrFunc);
         }
