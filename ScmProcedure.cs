@@ -19,14 +19,4 @@ namespace Shceme
 
         public abstract object Apply(object[] args);
     }
-
-    public class Arguments
-    {
-        private ScmExpression[] _exps;
-
-        public Arguments(ScmExpression[] exps)
-        {
-            _exps = exps;
-        }
-    }
 }

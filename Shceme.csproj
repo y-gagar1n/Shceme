@@ -59,6 +59,9 @@
     <Compile Include="Procedure\CompoundProcedure.cs" />
     <Compile Include="Procedure\PrimitiveProcedure.cs" />
     <Compile Include="Procedure\ProcedureFactory.cs" />
+    <Compile Include="Expression\ScmExpression.cs" />
+    <Compile Include="ScmEnvironment.cs" />
+    <Compile Include="ScmInterpreter.cs" />
     <Compile Include="ScmProcedure.cs" />
     <Compile Include="Procedure\LambdaProcedure.cs" />
     <Compile Include="Program.cs" />
