@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Authentication.ExtendedProtection;
@@ -42,9 +43,9 @@ namespace Shceme
             _factory = new ExpressionFactory();
             _env = new ScmEnvironment();
             
-            _env.Add("+", new ProcedureExpression(AggregateProcedure<int>.Create((acc, x) => acc + x)));
-            _env.Add("*", new ProcedureExpression(AggregateProcedure<int>.Create((acc, x) => acc * x, 1)));
-            _env.Add("-", new ProcedureExpression(AggregateProcedure<int>.Create((acc, x) => acc - x).TransformFirst(x => -x)));
+            _env.Add("+", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc + x)));
+            _env.Add("*", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc * x, 1.0)));
+            _env.Add("-", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc - x).TransformFirst(x => -x)));
         }
         public string Run(string text)
         {
@@ -52,7 +53,7 @@ namespace Shceme
 
             var resultExp = exp.Eval(_env) as SelfEvaluatingExpression;
 
-            return resultExp.Value.ToString();
+            return resultExp.ToString();
         }
     }
 

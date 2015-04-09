@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,15 @@ namespace Shceme
         public ScmExpression Create(string text)
         {
             int i;
-            if (Int32.TryParse(text, out i))
+            //if (Int32.TryParse(text, out i))
+            //{
+            //    return new SelfEvaluatingExpression(i);
+            //}
+            double d;
+            
+            if (double.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out d))
             {
-                return new SelfEvaluatingExpression(i);
+                return new SelfEvaluatingExpression(d);
             }
             if(text.StartsWith("'") && text.EndsWith("'"))
             {

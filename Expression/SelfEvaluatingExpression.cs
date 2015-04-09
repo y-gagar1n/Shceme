@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,20 @@ namespace Shceme.Expression
             }
             else
             {
-                int i;
-                if (value is string && Int32.TryParse((string)value, out i))
+                
+                if (value is string)
                 {
-                    value = i;
+                    int i;
+                    double d;
+                    //if (Int32.TryParse((string) value, out i))
+                    //{
+                    //    value = i;
+                    //}
+                    //else 
+                    if (double.TryParse((string)value, NumberStyles.Any, CultureInfo.InvariantCulture, out d))
+                    {
+                        value = d;
+                    }
                 }
                 _value = value;
             }
@@ -36,6 +47,18 @@ namespace Shceme.Expression
         public override ScmExpression Eval(ScmEnvironment env)
         {
             return this;
+        }
+
+        public override string ToString()
+        {
+            if (_value is double)
+            {
+                return ((double) _value).ToString().Replace(',', '.');
+            }
+            else
+            {
+                return _value.ToString();
+            }
         }
     }
 }
