@@ -34,14 +34,18 @@ namespace Shceme
                 var s = text.Substring(1, text.Length - 2);
                 var pars = _tokenizer.Parse(s).ToArray();
 
-                if (pars[0].Value == "define")
+                switch (pars[0].Value)
                 {
-                    return new DefinitionExpression(pars.Skip(1).ToArray());
-                }
-                else
-                {
-                    var ve = new VariableExpression(pars[0].Value);
-                    return new ApplicationExpression(ve, pars.Skip(1).Select(x => Create(x.Value)).ToArray());
+                    case "define":
+                        return new DefinitionExpression(pars.Skip(1).ToArray());
+                    case "if":
+                        var predicate = Create(pars[1].Value);
+                        var then = Create(pars[2].Value);
+                        var @else = Create(pars[3].Value);
+                        return new IfExpression(predicate, then, @else);
+                    default:
+                        var ve = new VariableExpression(pars[0].Value);
+                        return new ApplicationExpression(ve, pars.Skip(1).Select(x => Create(x.Value)).ToArray());
                 }
             }
 
