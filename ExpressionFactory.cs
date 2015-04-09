@@ -43,6 +43,8 @@ namespace Shceme
                         var then = Create(pars[2].Value);
                         var @else = Create(pars[3].Value);
                         return new IfExpression(predicate, then, @else);
+                    case "cond":
+                        return new ConditionalExpression(pars.Skip(1).ToArray());
                     default:
                         var ve = new VariableExpression(pars[0].Value);
                         return new ApplicationExpression(ve, pars.Skip(1).Select(x => Create(x.Value)).ToArray());

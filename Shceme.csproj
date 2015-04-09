@@ -44,6 +44,7 @@
     <Compile Include="ExpressionFactory.cs" />
     <Compile Include="Expression\ApplicationExpression.cs" />
     <Compile Include="Expression\AssignmentExpression.cs" />
+    <Compile Include="Expression\ConditionalExpression.cs" />
     <Compile Include="Expression\DefinitionExpression.cs" />
     <Compile Include="Expression\IfExpression.cs" />
     <Compile Include="Expression\LambdaExpression.cs" />
