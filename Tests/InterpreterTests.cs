@@ -28,6 +28,7 @@ namespace Tests
         [TestCase("(define pi 3.14159)", "(define radius 10)", "(* pi (* radius radius))", "314.159")]
         [TestCase("(define (abs x) (if (< x 0) (- x) x))", "(abs -5)", "5")]
         [TestCase("(define (abs x) (cond ((> x 0) x)((= x 0) 0)((< x 0)(- x))))", "(abs (- 5))", "5")]
+        [TestCase("(define (abs x) (cond ((> x 0) x) (else (- x))))", "(abs (- 5))", "5")]
         [TestCase(@"
 (define (add a b)
     (+ a b))", 

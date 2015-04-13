@@ -27,10 +27,18 @@ namespace Shceme.Expression
             {
                 foreach (var clause in _clauses)
                 {
-                    var args = _tokenizer.Parse(_tokenizer.Strip(clause.Value)).Select(x => _factory.Create(x.Value)).ToList();
-                    if (True(args[0].Eval(env)))
+                    var tokens = _tokenizer.Parse(_tokenizer.Strip(clause.Value)).ToArray();
+                    if (tokens[0].Value == "else")
                     {
-                        return args[1].Eval(env);
+                        return _factory.Create(tokens[1].Value).Eval(env);
+                    }
+                    else
+                    {
+                        var args = tokens.Select(x => _factory.Create(x.Value)).ToList();
+                        if (True(args[0].Eval(env)))
+                        {
+                            return args[1].Eval(env);
+                        }
                     }
                 }
             }
