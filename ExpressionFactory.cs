@@ -14,6 +14,7 @@ namespace Shceme
 
         public ScmExpression Create(string text)
         {
+            text = _tokenizer.Strip(text, brackets:false);
             bool b;
             if (bool.TryParse(text, out b))
             {

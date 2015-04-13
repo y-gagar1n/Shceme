@@ -26,9 +26,13 @@ namespace Tests
         [TestCase("(define (add a b c) (+ (+ a b) c))", "(add 1 2 4)", "7")]
         [TestCase("(define (sum-of-squares a b) (+ (* a a) (* b b)))", "(sum-of-squares 3 4)", "25")]
         [TestCase("(define pi 3.14159)", "(define radius 10)", "(* pi (* radius radius))", "314.159")]
-        [TestCase("(define (positive x) (if (> x 0) 1 2))", "(positive 5)", "1")]
-        [TestCase("(define (positive x) (cond ((> x 0) 1) ((< x 0) 2)))", "(positive 5)", "1")]
+        [TestCase("(define (abs x) (if (< x 0) (- x) x))", "(abs -5)", "5")]
         [TestCase("(define (abs x) (cond ((> x 0) x)((= x 0) 0)((< x 0)(- x))))", "(abs (- 5))", "5")]
+        [TestCase(@"
+(define (add a b)
+    (+ a b))", 
+  "(add 3 4)", "7")]
+
         public void TestMultiline(params string[] lines)
         {
             var interpreter = new ScmInterpreter();

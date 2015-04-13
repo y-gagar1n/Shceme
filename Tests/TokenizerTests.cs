@@ -33,5 +33,35 @@ namespace Tests
             var res = t.Parse("define (add a b) (a + b)").ToArray();
             Assert.AreEqual(new String[] { "define", "(add a b)", "(a + b)" }, res.Select(x => x.Value));
         }
+
+        [Test]
+        public void TestStrip()
+        {
+            var t = new Tokenizer();
+
+            var res = t.Strip("(define (add a b))");
+
+            Assert.That(res, Is.EqualTo("define (add a b)"));
+        }
+
+        [Test]
+        public void TestStrip2()
+        {
+            var t = new Tokenizer();
+
+            var res = t.Strip(" (define (add a b)) ");
+
+            Assert.That(res, Is.EqualTo("define (add a b)"));
+        }
+
+        [Test]
+        public void TestStrip3()
+        {
+            var t = new Tokenizer();
+
+            var res = t.Strip("\r\n  (define (add a b))\t\t ");
+
+            Assert.That(res, Is.EqualTo("define (add a b)"));
+        }
     }
 }

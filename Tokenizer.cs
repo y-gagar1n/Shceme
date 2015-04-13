@@ -19,41 +19,45 @@ namespace Shceme
                 
             for (int i = 0; i < text.Length; i++)
             {
-                switch (text[i])
+                if (char.IsWhiteSpace(text[i]))
                 {
-                    case ' ':
-                        if (isToken && bracketsLvl == 0)
-                        {
-                            result.Add(new Token(current, TokenType.Symbol));
-                            current = "";
-                            isToken = false;
-                        }
-                        if (bracketsLvl > 0)
-                        {
+                    if (isToken && bracketsLvl == 0)
+                    {
+                        result.Add(new Token(current, TokenType.Symbol));
+                        current = "";
+                        isToken = false;
+                    }
+                    if (bracketsLvl > 0)
+                    {
+                        current += text[i];
+                    }
+                }
+                else
+                {
+                    switch (text[i])
+                    {
+                        case '(':
+                            bracketsLvl++;
                             current += text[i];
-                        }
-                        break;
-                    case '(':
-                        bracketsLvl++;
-                        current += text[i];
-                        isToken = true;
-                        isTuple = true;
-                        break;
-                    case ')':
-                        bracketsLvl--;
-                        current += text[i];
-                        if (bracketsLvl == 0)
-                        {
-                            result.Add(new Token(current, TokenType.Tuple));
-                            current = "";
-                            isToken = false;
-                            isTuple = false;
-                        }
-                        break;
-                    default:
-                        current += text[i];
-                        isToken = true;
-                        break;
+                            isToken = true;
+                            isTuple = true;
+                            break;
+                        case ')':
+                            bracketsLvl--;
+                            current += text[i];
+                            if (bracketsLvl == 0)
+                            {
+                                result.Add(new Token(current, TokenType.Tuple));
+                                current = "";
+                                isToken = false;
+                                isTuple = false;
+                            }
+                            break;
+                        default:
+                            current += text[i];
+                            isToken = true;
+                            break;
+                    }
                 }
             }
 
@@ -65,12 +69,24 @@ namespace Shceme
             return result;
         }
 
-        public string Strip(string input)
+        public string Strip(string input, bool brackets = true)
         {
-            if (input.StartsWith("(") && input.EndsWith(")"))
+            int s = 0;
+            int f = input.Length - 1;
+
+            while (char.IsWhiteSpace(input[s])) s++;
+            while (char.IsWhiteSpace(input[f]) && f > s) f--;
+
+            if (brackets)
             {
-                input = input.Substring(1, input.Length - 2);
+                if (input[s] == '(' && input[f] == ')')
+                {
+                    s++;
+                    f--;
+                }
             }
+
+            input = input.Substring(s, f - s + 1);
 
             return input;
         }
