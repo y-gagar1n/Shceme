@@ -38,6 +38,8 @@ namespace Tests
         [TestCase("(define (outer x) (or (< x 5) (> x 10)))", "(outer 7)", "false")]
         [TestCase("(define (outer x) (or (< x 5) (> x 10)))", "(outer 3)", "true")]
         [TestCase("(define (positive x) (not (< x 0)))", "(positive 3)", "true")]
+        [TestCase("(define (>= x y) (not (< x y)))", "(>= 5 3)", "true")]
+        [TestCase("(define a 3)", "(define b (+ a 1))", "b", "4")]
 
         public void TestMultiline(params string[] lines)
         {
