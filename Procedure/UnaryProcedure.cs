@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Shceme.Procedure
 {
-    public class BooleanProcedure<T> : PrimitiveProcedure
+    public class UnaryProcedure<TArg, TResult> : PrimitiveProcedure
     {
-        private Func<T, T, bool> _func;
+        private Func<TArg, TResult> _func;
 
-        public BooleanProcedure(Func<T, T, bool> func)
+        public UnaryProcedure(Func<TArg, TResult> func)
         {
             _func = func;
         }
 
         public override object Apply(object[] args)
         {
-            return _func((T)args[0], (T)args[1]);
+            return _func((TArg)args[0]);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace Shceme
             _env.Add("+", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc + x)));
             _env.Add("*", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc * x, 1.0)));
             _env.Add("-", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc - x).TransformFirst((x, n) => n > 1 ? -x : x)));
-            _env.Add(">", new ProcedureExpression(new BooleanProcedure<double>((x1, x2) => x1 > x2)));
-            _env.Add("<", new ProcedureExpression(new BooleanProcedure<double>((x1, x2) => x1 < x2)));
-            _env.Add("=", new ProcedureExpression(new BooleanProcedure<double>((x1, x2) => x1 == x2)));
+            _env.Add(">", new ProcedureExpression(new BinaryProcedure<double,bool>((x1, x2) => x1 > x2)));
+            _env.Add("<", new ProcedureExpression(new BinaryProcedure<double,bool>((x1, x2) => x1 < x2)));
+            _env.Add("=", new ProcedureExpression(new BinaryProcedure<double, bool>((x1, x2) => x1 == x2)));
             _env.Add("and", new ProcedureExpression(new AggregateProcedure<bool>((acc, x) => acc && x, true)));
             _env.Add("or", new ProcedureExpression(new AggregateProcedure<bool>((acc, x) => acc || x, false)));
-            //_env.Add("not", new ProcedureExpression(new BooleanProcedure<double>(x => !x)));
+            _env.Add("not", new ProcedureExpression(new UnaryProcedure<bool, bool>(x => !x)));
         }
         public string Run(string text)
         {
