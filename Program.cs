@@ -19,7 +19,8 @@ namespace Shceme
                 if (text == "quit") return;
                 try
                 {
-                    Console.WriteLine(interpreter.Run(text));
+                    string result = interpreter.Run(text);
+                    if(result != null) Console.WriteLine(result);
                 }
                 catch (Exception ex)
                 {

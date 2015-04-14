@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BracketsCheckResult.cs" />
     <Compile Include="ExpressionFactory.cs" />
     <Compile Include="Expression\ApplicationExpression.cs" />
     <Compile Include="Expression\AssignmentExpression.cs" />

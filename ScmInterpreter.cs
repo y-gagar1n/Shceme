@@ -1,3 +1,4 @@
+using System;
 using Shceme.Expression;
 using Shceme.Procedure;
 
@@ -7,6 +8,7 @@ namespace Shceme
     {
         private ExpressionFactory _factory;
         private ScmEnvironment _env;
+        private string command = "";
 
         public ScmInterpreter()
         {
@@ -25,9 +27,42 @@ namespace Shceme
         }
         public string Run(string text)
         {
-            var exp = _factory.Create(text);
-            ScmExpression resultExp = exp.Eval(_env);
-            return (resultExp as SelfEvaluatingExpression).ToString();
+            command += text;
+
+            switch(CheckBrackets(command))
+            {
+                case BracketsCheckResult.OK:
+                    var exp = _factory.Create(command);
+                    command = "";
+                    ScmExpression resultExp = exp.Eval(_env);
+                    return (resultExp as SelfEvaluatingExpression).ToString();
+                case BracketsCheckResult.TooMuch:
+                    command = "";
+                    return "Too many closing brackets";
+                default:
+                    command += " ";
+                    return null;
+            }
+        }
+
+        private BracketsCheckResult CheckBrackets(string text)
+        {
+            int level = 0;
+            foreach (var c in text)
+            {
+                switch (c)
+                {
+                    case '(':
+                        level++;
+                        break;
+                    case ')':
+                        level--;
+                        if (level < 0) return BracketsCheckResult.TooMuch;
+                        break;
+                }
+            }
+
+            return level == 0 ? BracketsCheckResult.OK : BracketsCheckResult.NotYet;
         }
     }
 }
