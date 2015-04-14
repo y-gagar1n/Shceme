@@ -21,7 +21,7 @@ namespace Shceme.Expression
             _variableName = variableName;
         }
 
-        public override ScmExpression Eval(ScmEnvironment env)
+        protected override ScmExpression EvalImpl(ScmEnvironment env)
         {
             var result = env.Lookup(_variableName);
             return result is ScmExpression ? result as ScmExpression : new SelfEvaluatingExpression(result);

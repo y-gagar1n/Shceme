@@ -17,7 +17,7 @@ namespace Shceme.Expression
             _clauses = clauses;
         }
 
-        public override ScmExpression Eval(ScmEnvironment env)
+        protected override ScmExpression EvalImpl(ScmEnvironment env)
         {
             if (!_clauses.Any())
             {

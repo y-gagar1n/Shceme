@@ -26,13 +26,7 @@ namespace Shceme
         public string Run(string text)
         {
             var exp = _factory.Create(text);
-
-            ScmExpression resultExp = exp;
-            while (!(resultExp is SelfEvaluatingExpression))
-            {
-                resultExp = resultExp.Eval(_env);
-            }
-
+            ScmExpression resultExp = exp.Eval(_env);
             return (resultExp as SelfEvaluatingExpression).ToString();
         }
     }

@@ -44,7 +44,7 @@ namespace Shceme.Expression
             
         }
 
-        public override ScmExpression Eval(ScmEnvironment env)
+        protected override ScmExpression EvalImpl(ScmEnvironment env)
         {
             return this;
         }

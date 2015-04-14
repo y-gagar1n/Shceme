@@ -16,7 +16,7 @@ namespace Shceme.Expression
         }
 
 
-        public override ScmExpression Eval(ScmEnvironment env)
+        protected override ScmExpression EvalImpl(ScmEnvironment env)
         {
             ScmExpression result = null;
             foreach (var scmExpression in _exprs)

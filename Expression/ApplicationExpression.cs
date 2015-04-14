@@ -20,7 +20,7 @@ namespace Shceme.Expression
             Arguments = arguments;
         }
 
-        public override ScmExpression Eval(ScmEnvironment env)
+        protected override ScmExpression EvalImpl(ScmEnvironment env)
         {
             var exp = @Operator.Eval(env);
 
@@ -59,7 +59,7 @@ namespace Shceme.Expression
                 return application.Eval(env);
             }
 
-            return new VoidExpression();
+            return exp;//new VoidExpression();
         }
 
         private object[] MapValues(ScmExpression[] exps, ScmEnvironment env)

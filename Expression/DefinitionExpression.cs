@@ -18,7 +18,7 @@ namespace Shceme.Expression
             _arguments = arguments;
         }
 
-        public override ScmExpression Eval(ScmEnvironment env)
+        protected override ScmExpression EvalImpl(ScmEnvironment env)
         {
             if (_arguments[0].Type == TokenType.Symbol)
             {
