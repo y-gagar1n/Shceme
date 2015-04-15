@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Shceme.Expression;
 
 namespace Shceme
 {
@@ -38,7 +39,15 @@ namespace Shceme
         {
             if (_dict.ContainsKey(variableName))
             {
-                return _dict[variableName];
+                var value = _dict[variableName];
+                if (value is VariableExpression)
+                {
+                    return Parent.Lookup((value as VariableExpression).VariableName);
+                }
+                else
+                {
+                    return value;
+                }
             }
             else if (Parent != null)
             {

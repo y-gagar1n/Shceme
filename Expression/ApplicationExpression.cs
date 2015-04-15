@@ -40,13 +40,13 @@ namespace Shceme.Expression
                 }
                 else
                 {
-                    var parameters = proc.Proc.Parameters.ToList();
-                    var newEnv = env.Extend();
-                    for (int i = 0; i < parameters.Count(); i++)
-                    {
-                        newEnv.Dict[parameters[i]] = Arguments[i];
-                    }
-                    mappedOperands = MapValues(Arguments, newEnv);
+                    mappedOperands = MapValues(Arguments, env);
+                    //var parameters = proc.Proc.Parameters.ToList();
+                    //var newEnv = env.Extend();
+                    //for (int i = 0; i < parameters.Count(); i++)
+                    //{
+                    //    newEnv.Dict[parameters[i]] = Arguments[i];
+                    //}
                 }
 
                 ve = proc.Proc.Apply(mappedOperands);

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Authentication.ExtendedProtection;
 using System.Security.Cryptography.X509Certificates;
@@ -13,6 +15,25 @@ namespace Shceme
         static void Main(string[] args)
         {
             var interpreter = new ScmInterpreter();
+
+            if (args.Length == 2 && args[0] == "-f")
+            {
+                var filePath = Path.GetFullPath(args[1]);
+                if (File.Exists(filePath))
+                {
+                    var lines = File.ReadAllLines(filePath);
+                    foreach (var line in lines)
+                    {
+                        interpreter.Run(line);
+                    }
+                    Console.WriteLine("{0} loaded", filePath);
+                }
+                else
+                {
+                    Console.WriteLine("{0} not found", filePath);
+                }
+            }
+
             while (true)
             {
                 var text = Console.ReadLine();

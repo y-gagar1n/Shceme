@@ -42,6 +42,14 @@ namespace Tests
         [TestCase("(define a 3)", "(define b (+ a 1))", "b", "4")]
         [TestCase("(define a 3)", "(define b (+ a 1))", "(* a b)", "12")]
         [TestCase("(define (", "add a b", ") (+ a b", "))", "(add 7 8)", "15")]
+        [TestCase("(define (square-sum a b) (+ (* a a) (* b b)))", 
+            "(define (two-bigger a b c) (if (> a b) (if (> b c) (square-sum a b) (square-sum a c)) (if (< a c) (square-sum b c) (square-sum a b))))", 
+            "(two-bigger 3 2 1)",
+            "13")]
+        [TestCase("(define (square-sum a b) (+ (* a a) (* b b)))",
+            "(define (two-bigger a b c) (if (> a b) (if (> b c) (square-sum a b) (square-sum a c)) (if (< a c) (square-sum b c) (square-sum a b))))",
+            "(two-bigger 1 2 3)",
+            "13")]
         public void TestMultiline(params string[] lines)
         {
             var interpreter = new ScmInterpreter();
