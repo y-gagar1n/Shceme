@@ -10,11 +10,11 @@ namespace Shceme.Expression
 {
     public class ApplicationExpression : ScmExpression
     {
-        public VariableExpression Operator { get; set; }
+        public ScmExpression Operator { get; set; }
         public ScmExpression[] Arguments { get; set; }
         public ProcedureFactory _factory = new ProcedureFactory();
 
-        public ApplicationExpression(VariableExpression @operator, ScmExpression[] arguments)
+        public ApplicationExpression(ScmExpression @operator, ScmExpression[] arguments)
         {
             Operator = @operator;
             Arguments = arguments;

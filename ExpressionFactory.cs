@@ -47,7 +47,7 @@ namespace Shceme
                     case "cond":
                         return new ConditionalExpression(pars.Skip(1).ToArray());
                     default:
-                        var ve = new VariableExpression(pars[0].Value);
+                        var ve = Create(pars[0].Value);
                         return new ApplicationExpression(ve, pars.Skip(1).Select(x => Create(x.Value)).ToArray());
                 }
             }

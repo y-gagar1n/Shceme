@@ -50,6 +50,7 @@ namespace Tests
             "(define (two-bigger a b c) (if (> a b) (if (> b c) (square-sum a b) (square-sum a c)) (if (< a c) (square-sum b c) (square-sum a b))))",
             "(two-bigger 1 2 3)",
             "13")]
+        [TestCase("(define (a-plus-abs-b a b)((if (> b 0) + -) a b))", "(a-plus-abs-b 7 (- 8))", "15")]
         public void TestMultiline(params string[] lines)
         {
             var interpreter = new ScmInterpreter();
