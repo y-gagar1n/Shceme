@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Runtime.ExceptionServices;
 using Shceme.Expression;
 using Shceme.Procedure;
 
@@ -16,17 +18,37 @@ namespace Shceme
             _env = new ScmEnvironment();
             
             _env.Add("+", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc + x)));
-            _env.Add("*", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc * x, 1.0)));
-            _env.Add("-", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc - x).TransformFirst((x, n) => n > 1 ? -x : x)));
+            _env.Add("*", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc * x)));
+            _env.Add("-", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc - x, (first, n) => n > 1 ? first : -first)));
+            _env.Add("/", new ProcedureExpression(AggregateProcedure<double>.Create((acc, x) => acc / x)));
             _env.Add(">", new ProcedureExpression(new BinaryProcedure<double,bool>((x1, x2) => x1 > x2)));
             _env.Add("<", new ProcedureExpression(new BinaryProcedure<double,bool>((x1, x2) => x1 < x2)));
             _env.Add("=", new ProcedureExpression(new BinaryProcedure<double, bool>((x1, x2) => x1 == x2)));
-            _env.Add("and", new ProcedureExpression(new AggregateProcedure<bool>((acc, x) => acc && x, true)));
-            _env.Add("or", new ProcedureExpression(new AggregateProcedure<bool>((acc, x) => acc || x, false)));
+            _env.Add("and", new ProcedureExpression(new AggregateProcedure<bool>((acc, x) => acc && x)));
+            _env.Add("or", new ProcedureExpression(new AggregateProcedure<bool>((acc, x) => acc || x)));
             _env.Add("not", new ProcedureExpression(new UnaryProcedure<bool, bool>(x => !x)));
+
+            LoadModule("main");
         }
+
+        private void LoadModule(string name)
+        {
+            var modulesFolder = Path.Combine("Modules", name + ".scm");
+            var filePath = Path.GetFullPath(modulesFolder);
+            {
+                var lines = File.ReadAllLines(filePath);
+                foreach (var line in lines)
+                {
+                    Run(line);
+                }
+                Console.WriteLine("{0} module loaded", name);
+            }
+        }
+
         public string Run(string text)
         {
+            if (String.IsNullOrEmpty(text)) return null;
+
             command += text;
 
             switch(CheckBrackets(command))

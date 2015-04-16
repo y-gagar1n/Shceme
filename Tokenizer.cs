@@ -71,22 +71,25 @@ namespace Shceme
 
         public string Strip(string input, bool brackets = true)
         {
-            int s = 0;
-            int f = input.Length - 1;
-
-            while (char.IsWhiteSpace(input[s])) s++;
-            while (char.IsWhiteSpace(input[f]) && f > s) f--;
-
-            if (brackets)
+            if (input.Length > 0)
             {
-                if (input[s] == '(' && input[f] == ')')
-                {
-                    s++;
-                    f--;
-                }
-            }
+                int s = 0;
+                int f = input.Length - 1;
 
-            input = input.Substring(s, f - s + 1);
+                while (char.IsWhiteSpace(input[s])) s++;
+                while (char.IsWhiteSpace(input[f]) && f > s) f--;
+
+                if (brackets)
+                {
+                    if (input[s] == '(' && input[f] == ')')
+                    {
+                        s++;
+                        f--;
+                    }
+                }
+
+                input = input.Substring(s, f - s + 1);
+            }
 
             return input;
         }

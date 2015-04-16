@@ -41,12 +41,6 @@ namespace Shceme.Expression
                 else
                 {
                     mappedOperands = MapValues(Arguments, env);
-                    //var parameters = proc.Proc.Parameters.ToList();
-                    //var newEnv = env.Extend();
-                    //for (int i = 0; i < parameters.Count(); i++)
-                    //{
-                    //    newEnv.Dict[parameters[i]] = Arguments[i];
-                    //}
                 }
 
                 ve = proc.Proc.Apply(mappedOperands);
@@ -59,7 +53,7 @@ namespace Shceme.Expression
                 return application.Eval(env);
             }
 
-            return exp;//new VoidExpression();
+            return exp;
         }
 
         private object[] MapValues(ScmExpression[] exps, ScmEnvironment env)
