@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace Shceme.Procedure
 
         public override object Apply(object[] args)
         {
+            Debug.Assert(args.Length >= _parameters.Length);
             var newEnv = _scmEnvironment.Extend();
             for (int i = 0; i < _parameters.Length; i++)
             {
