@@ -17,6 +17,6 @@ namespace Shceme
             get { return _parameters; }
         }
 
-        public abstract object Apply(object[] args);
+        public abstract ApplyResult Apply(object[] args);
     }
 }

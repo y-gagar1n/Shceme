@@ -43,9 +43,23 @@ namespace Shceme.Expression
                     mappedOperands = MapValues(Arguments, env);
                 }
 
-                ve = proc.Proc.Apply(mappedOperands);
-
-                return new SelfEvaluatingExpression(ve).ToResult();
+                var applyResult = proc.Proc.Apply(mappedOperands);
+                if (applyResult.Success)
+                {
+                    return new SelfEvaluatingExpression(applyResult.Value).ToResult();
+                }
+                else
+                {
+                    string msg = "";
+                    if (@Operator is VariableExpression)
+                    {
+                        string procedureName = (@Operator as VariableExpression).VariableName;
+                        msg = String.Format("Error while applying procedure {0}:{1}", procedureName,
+                            Environment.NewLine);
+                    }
+                    
+                    return EvalResult.Error(msg + applyResult.ErrorMessage);
+                }
             }
             else if (exp is ApplicationExpression)
             {

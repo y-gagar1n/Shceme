@@ -27,3 +27,5 @@
 
 (define (cube-root x)
 	(sqrt-iter 1.0 x improve-cube cube))
+
+(define (add a b) (+ a b))

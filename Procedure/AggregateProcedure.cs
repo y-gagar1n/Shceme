@@ -15,13 +15,13 @@ namespace Shceme.Procedure
             _aggrFunc = aggrFunc;
         }
         
-        public override object Apply(object[] args)
+        public override ApplyResult Apply(object[] args)
         {
             var list = args
                 .OfType<T>()
                 .ToList();
             var seed = _seedFunc(list[0], list.Count);
-            return list.Skip(1).Aggregate(seed, _aggrFunc);
+            return ApplyResult.From(list.Skip(1).Aggregate(seed, _aggrFunc));
         }
 
         public static AggregateProcedure<T> Create(Func<T, T, T> aggrFunc, Func<T, int, T> seedFunc = null)

@@ -15,9 +15,9 @@ namespace Shceme.Procedure
             _func = func;
         }
 
-        public override object Apply(object[] args)
+        public override ApplyResult Apply(object[] args)
         {
-            return _func((TArg)args[0], (TArg)args[1]);
+            return ApplyResult.From(_func((TArg)args[0], (TArg)args[1]));
         }
     }
 }

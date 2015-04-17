@@ -26,8 +26,13 @@ namespace Shceme.Procedure
             _scmExpression = exp;
         }
 
-        public override object Apply(object[] args)
+        public override ApplyResult Apply(object[] args)
         {
+            if (args.Length < _parameters.Length)
+            {
+                var msg = String.Format("Expected {0} arguments, actual: {1}", _parameters.Length, args.Length);
+                return new ApplyResult(msg);
+            }
             Debug.Assert(args.Length >= _parameters.Length);
             var newEnv = _scmEnvironment.Extend();
             for (int i = 0; i < _parameters.Length; i++)
@@ -35,7 +40,7 @@ namespace Shceme.Procedure
                 newEnv.Add(_parameters[i], args[i]);
             }
             var se = _scmExpression.Eval(newEnv).Value as SelfEvaluatingExpression;
-            return se.Value;
+            return ApplyResult.From(se.Value);
         }
     }
 }

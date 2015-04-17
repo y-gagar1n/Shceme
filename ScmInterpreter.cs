@@ -56,8 +56,16 @@ namespace Shceme
                 case BracketsCheckResult.OK:
                     var exp = _factory.Create(command);
                     command = "";
-                    ScmExpression resultExp = exp.Eval(_env).Value;
-                    return (resultExp as SelfEvaluatingExpression).ToString();
+                    EvalResult result = exp.Eval(_env);
+                    if (result.Success)
+                    {
+                        ScmExpression resultExp = exp.Eval(_env).Value;
+                        return (resultExp as SelfEvaluatingExpression).ToString();
+                    }
+                    else
+                    {
+                        return result.ErrorMessage;
+                    }
                 case BracketsCheckResult.TooMuch:
                     command = "";
                     return "Too many closing brackets";

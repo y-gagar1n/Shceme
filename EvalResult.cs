@@ -11,14 +11,30 @@ namespace Shceme
     {
         public ScmExpression Value { get; set; }
 
+        public bool Success { get; set; }
+
+        public string ErrorMessage { get; set; }
+
         public EvalResult(ScmExpression value)
         {
+            Success = true;
             Value = value;
+        }
+
+        public EvalResult(string message)
+        {
+            Success = false;
+            ErrorMessage = message;
         }
 
         public static EvalResult From(ScmExpression exp)
         {
             return new EvalResult(exp);
+        }
+
+        public static EvalResult Error(string message)
+        {
+            return new EvalResult(message);
         }
     }
 
