@@ -19,9 +19,9 @@ namespace Shceme.Expression
             _predicate = predicate;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
-            if (True(_predicate.Eval(env)))
+            if (True(_predicate.Eval(env).Value))
             {
                 return _then.Eval(env);
             }

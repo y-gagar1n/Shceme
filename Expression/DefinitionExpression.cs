@@ -18,7 +18,7 @@ namespace Shceme.Expression
             _arguments = arguments;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
             if (_arguments[0].Type == TokenType.Symbol)
             {
@@ -29,11 +29,11 @@ namespace Shceme.Expression
                 var pars = _tokenizer.Parse(_tokenizer.Strip(_arguments[0].Value)).ToList();
                 var newVariable = pars[0].Value;
                 var lambda = new LambdaExpression(_factory.Create(_arguments[1].Value), pars.Skip(1).Select(x => x.Value).ToArray(), env);
-                var newValue = lambda.Eval(env);
+                var newValue = lambda.Eval(env).Value;
                 DefineVariable(newVariable, newValue, env);
             }
 
-            return new VoidExpression();
+            return new VoidExpression().ToResult();
         }
 
         private void DefineVariable(string var, ScmExpression val, ScmEnvironment env)

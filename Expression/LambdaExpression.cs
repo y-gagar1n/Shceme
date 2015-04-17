@@ -21,10 +21,10 @@ namespace Shceme.Expression
             _parameters = parameters;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
             var proc = new LambdaProcedure(_body, _env, _parameters);
-            return new ProcedureExpression(proc);
+            return (new ProcedureExpression(proc)).ToResult();
         }
     }
 }

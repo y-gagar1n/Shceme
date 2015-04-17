@@ -56,7 +56,7 @@ namespace Shceme
                 case BracketsCheckResult.OK:
                     var exp = _factory.Create(command);
                     command = "";
-                    ScmExpression resultExp = exp.Eval(_env);
+                    ScmExpression resultExp = exp.Eval(_env).Value;
                     return (resultExp as SelfEvaluatingExpression).ToString();
                 case BracketsCheckResult.TooMuch:
                     command = "";

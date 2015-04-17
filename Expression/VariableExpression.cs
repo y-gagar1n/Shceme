@@ -21,10 +21,10 @@ namespace Shceme.Expression
             _variableName = variableName;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
             var result = env.Lookup(_variableName);
-            return result is ScmExpression ? result as ScmExpression : new SelfEvaluatingExpression(result);
+            return (result is ScmExpression ? result as ScmExpression : new SelfEvaluatingExpression(result)).ToResult();
         }
     }
 }

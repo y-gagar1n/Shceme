@@ -17,11 +17,11 @@ namespace Shceme.Expression
             _clauses = clauses;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
             if (!_clauses.Any())
             {
-                return new SelfEvaluatingExpression(false);
+                return new SelfEvaluatingExpression(false).ToResult();
             }
             else
             {
@@ -35,7 +35,7 @@ namespace Shceme.Expression
                     else
                     {
                         var args = tokens.Select(x => _factory.Create(x.Value)).ToList();
-                        if (True(args[0].Eval(env)))
+                        if (True(args[0].Eval(env).Value))
                         {
                             return args[1].Eval(env);
                         }
@@ -43,7 +43,7 @@ namespace Shceme.Expression
                 }
             }
 
-            return new SelfEvaluatingExpression(false);
+            return new SelfEvaluatingExpression(false).ToResult();
         }
 
         private bool True(ScmExpression exp)

@@ -21,7 +21,7 @@ namespace Shceme.Expression
             _proc = proc;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
             throw new NotImplementedException();
         }

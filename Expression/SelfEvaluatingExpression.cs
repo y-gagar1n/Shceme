@@ -44,9 +44,9 @@ namespace Shceme.Expression
             
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
-            return this;
+            return this.ToResult();
         }
 
         public override string ToString()

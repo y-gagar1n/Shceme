@@ -16,14 +16,14 @@ namespace Shceme.Expression
         }
 
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
             ScmExpression result = null;
             foreach (var scmExpression in _exprs)
             {
-                result = scmExpression.Eval(env);
+                result = scmExpression.Eval(env).Value;
             }
-            return result;
+            return result.ToResult();
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Shceme.Expression
             Arguments = arguments;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
-            var exp = @Operator.Eval(env);
+            var exp = @Operator.Eval(env).Value;
 
             if (exp is ProcedureExpression)
             {
@@ -33,7 +33,7 @@ namespace Shceme.Expression
                 if (proc.Proc is PrimitiveProcedure)
                 {
                     mappedOperands =
-                        Arguments.Select(x => x.Eval(env))
+                        Arguments.Select(x => x.Eval(env).Value)
                             .OfType<SelfEvaluatingExpression>()
                             .Select(x => x.Value)
                             .ToArray();
@@ -45,7 +45,7 @@ namespace Shceme.Expression
 
                 ve = proc.Proc.Apply(mappedOperands);
 
-                return new SelfEvaluatingExpression(ve);
+                return new SelfEvaluatingExpression(ve).ToResult();
             }
             else if (exp is ApplicationExpression)
             {
@@ -53,12 +53,12 @@ namespace Shceme.Expression
                 return application.Eval(env);
             }
 
-            return exp;
+            return exp.ToResult();
         }
 
         private object[] MapValues(ScmExpression[] exps, ScmEnvironment env)
         {
-            return exps.Select(x => x.Eval(env)).Select(x =>
+            return exps.Select(x => x.Eval(env).Value).Select(x =>
             {
                 if (x is SelfEvaluatingExpression)
                 {

@@ -17,9 +17,9 @@ namespace Shceme.Expression
             _value = value;
         }
 
-        protected override ScmExpression EvalImpl(ScmEnvironment env)
+        protected override EvalResult EvalImpl(ScmEnvironment env)
         {
-            SetVariable(_variable, _value.Eval(env), env);
+            SetVariable(_variable, _value.Eval(env).Value, env);
             return null;
         }
 

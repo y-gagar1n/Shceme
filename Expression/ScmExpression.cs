@@ -2,17 +2,17 @@ namespace Shceme.Expression
 {
     public abstract class ScmExpression
     {
-        public ScmExpression Eval(ScmEnvironment env)
+        public EvalResult Eval(ScmEnvironment env)
         {
-            var exp = this.EvalImpl(env);
+            var exp = this.EvalImpl(env).Value;
             var resultExp = exp;
             while (!(resultExp is SelfEvaluatingExpression) && !(resultExp is ProcedureExpression))
             {
-                resultExp = resultExp.Eval(env);
+                resultExp = resultExp.Eval(env).Value;
             }
-            return resultExp;
+            return resultExp.ToResult();
         }
 
-        protected abstract ScmExpression EvalImpl(ScmEnvironment env);
+        protected abstract EvalResult EvalImpl(ScmEnvironment env);
     }
 }

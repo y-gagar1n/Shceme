@@ -34,7 +34,7 @@ namespace Shceme.Procedure
             {
                 newEnv.Add(_parameters[i], args[i]);
             }
-            var se = _scmExpression.Eval(newEnv) as SelfEvaluatingExpression;
+            var se = _scmExpression.Eval(newEnv).Value as SelfEvaluatingExpression;
             return se.Value;
         }
     }
